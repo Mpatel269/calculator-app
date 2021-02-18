@@ -3,7 +3,7 @@ import Button from './Button';
 import Display from './Display';
 
 const CalculatorBody = () => {
-    const [displayValue, setDisplayValue] = useState('');
+    const [answer, setAnswer] = useState(null);
     const [numberOne, setNumberOne] = useState('')
     const [numberTwo, setNumberTwo] = useState('')
     const [chosenOperator, setChosenOperator] = useState('')
@@ -12,45 +12,48 @@ const CalculatorBody = () => {
     const numberClicked = (num) => {
         if (chosenOperator.length == 0) {
             setNumberOne(numberOne.concat(num))
-            setDisplayValue(numberOne + chosenOperator + numberTwo)
         }
         else {
             setNumberTwo(numberTwo.concat(num))
-            setDisplayValue(numberOne + chosenOperator + numberTwo)
         }
     };
 
     const operatorClicked = (operator) => {
         if (chosenOperator.length == 0) {
             setChosenOperator(chosenOperator.concat(operator))
-            setDisplayValue(numberOne + chosenOperator + numberTwo)
         }
         else {
             setChosenOperator(chosenOperator)
-            setDisplayValue(numberOne + chosenOperator + numberTwo)
         }
     }
 
     const sum = () => {
         if (chosenOperator == '+') {
-            setDisplayValue(parseInt(numberOne) + parseInt(numberTwo))
+            setAnswer(parseInt(numberOne) + parseInt(numberTwo))
         }
         else if (chosenOperator == '-') {
-            setDisplayValue(parseInt(numberOne) - parseInt(numberTwo))
+            setAnswer(parseInt(numberOne) - parseInt(numberTwo))
         }
         else if (chosenOperator == '/') {
-            setDisplayValue(parseInt(numberOne) / parseInt(numberTwo))
+            setAnswer(parseInt(numberOne) / parseInt(numberTwo))
         }
         else if (chosenOperator == '*') {
-            setDisplayValue(parseInt(numberOne) * parseInt(numberTwo))
+            setAnswer(parseInt(numberOne) * parseInt(numberTwo))
         }
+    }
+
+    const clearNumbers = () => {
+        setNumberOne('')
+        setNumberTwo('')
+        setChosenOperator('')
+        setAnswer(null)
     }
 
     return(
         <div className = 'calculator-body'>
             
             <div className="row-1">
-                <Display outcome = {displayValue}/>
+                <Display outcome = {answer ? answer: numberOne + chosenOperator + numberTwo}/>
             </div>
             <div className="row-2">
                 <Button value = '7' clickFunction = {() => numberClicked('7')}/>
@@ -64,7 +67,7 @@ const CalculatorBody = () => {
                 <Button value = '5' clickFunction = {() => numberClicked('5')}/>
                 <Button value = '6' clickFunction = {() => numberClicked('6')}/>
                 <Button value = '*' clickFunction = {() => operatorClicked('*')}/>
-                <Button value = '-->'/>
+                <Button value = 'CLR' clickFunction = {() => clearNumbers()}/>
             </div>
             <div className="row-2">
                 <Button value = '1' clickFunction = {() => numberClicked('1')}/>
