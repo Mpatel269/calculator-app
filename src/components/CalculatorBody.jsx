@@ -4,10 +4,10 @@ import Display from './Display';
 
 const CalculatorBody = () => {
     const [answer, setAnswer] = useState(null);
-    const [numberOne, setNumberOne] = useState('')
-    const [numberTwo, setNumberTwo] = useState('')
-    const [chosenOperator, setChosenOperator] = useState('')
-
+    const [numberOne, setNumberOne] = useState('');
+    const [numberTwo, setNumberTwo] = useState('');
+    const [chosenOperator, setChosenOperator] = useState('');
+    const [prevAns, setPrevAns] = useState(null)
 
     const numberClicked = (num) => {
         if (chosenOperator.length == 0) {
@@ -49,6 +49,16 @@ const CalculatorBody = () => {
         setAnswer(null)
     }
 
+    const ansButtonClicked = () => {
+        setAnswer(prevAns)
+        setNumberOne(prevAns)
+    }
+
+    const storeNumber = () => {
+        setPrevAns(answer)
+    }
+
+
     return(
         <div className = 'calculator-body'>
             
@@ -60,7 +70,7 @@ const CalculatorBody = () => {
                 <Button value = '8' clickFunction = {() => numberClicked('8')}/>
                 <Button value = '9' clickFunction = {() => numberClicked('9')}/>
                 <Button value = '/' clickFunction = {() => operatorClicked('/')}/>
-                <Button value = '+/-'/>
+                <Button value = 'Sto' clickFunction = {() => storeNumber()}/>
             </div>
             <div className="row-2">
                 <Button value = '4' clickFunction = {() => numberClicked('4')}/>
@@ -81,7 +91,7 @@ const CalculatorBody = () => {
                 <Button value = '00' clickFunction = {() => numberClicked('0')}/>
                 <Button value = '.' clickFunction = {() => numberClicked('.')}/>
                 <Button value = '+' clickFunction = {() => operatorClicked('+')}/>
-                <Button value = '='/>
+                <Button value = 'Ans' clickFunction = {() => ansButtonClicked()} />
             </div>
 
 
